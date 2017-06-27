@@ -28,6 +28,20 @@ var albumPicasso = {
      ]
  };
 
+ var albumMe = {
+   title: 'SV',
+   artist: 'Slidar Vasquez',
+   label: 'Zoo',
+   year: '1993'
+   albumArtUrl: 'assets/images/album_covers/01.png',
+   songs: [
+     {title: 'Hi', duration: '2:00'},
+     {title: 'My', duration: '1:00'},
+     {title: 'Name', duration: '3:00'},
+     {title: 'Is', duration: '3:30'}
+   ]
+ };
+
  var createSongRow = function(songNumber, songName, songLength) {
      var template =
         '<tr class="album-view-song-item">'
