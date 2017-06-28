@@ -32,7 +32,7 @@ var albumPicasso = {
    title: 'SV',
    artist: 'Slidar Vasquez',
    label: 'Zoo',
-   year: '1993'
+   year: '1993',
    albumArtUrl: 'assets/images/album_covers/01.png',
    songs: [
      {title: 'Hi', duration: '2:00'},
@@ -54,11 +54,13 @@ var albumPicasso = {
      return template;
  };
 
+var albumImage = document.getElementsByClassName('album-cover-art')[0];
+
  var setCurrentAlbum = function(album) {
      var albumTitle = document.getElementsByClassName('album-view-title')[0];
      var albumArtist = document.getElementsByClassName('album-view-artist')[0];
      var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-     var albumImage = document.getElementsByClassName('album-cover-art')[0];
+
      var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
 
      // #2
@@ -78,4 +80,20 @@ var albumPicasso = {
 
  window.onload = function() {
      setCurrentAlbum(albumPicasso);
+
+     // The goal is to add a click event to the album art (album image)
+     // and that event should go through all of the albums in the collection
+     // and if it reaches the end, we want it to start back over
+
+     var albums = [albumPicasso, albumMarconi, albumMe];
+     var i = 0;
+
+     albumImage.addEventListener("click", function () {
+       i++;
+       if (i === albums.length) {
+         i = 0;
+       }
+
+       setCurrentAlbum(albums[i]);
+     });
  };
