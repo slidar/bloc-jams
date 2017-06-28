@@ -63,13 +63,13 @@ var albumPicasso = {
  };
 
  var findParentByClassName = function(element, targetClass) {
-     if (element) {
-         var currentParent = element.parentElement;
-         while (currentParent.className !== targetClass && currentParent.className !== null) {
-             currentParent = currentParent.parentElement;
+     if (var currentParent !== element.parentElement;) {
+         console.log('No parent found');
+       } else(currentParent.className !== targetClass && currentParent.className !== null) {
+             currentParent !==== targetClass.parentElement;
+             console.log('No parent found with that class name');
          }
-         return currentParent;
-     }
+  
  };
 
  var getSongItem = function(element) {
