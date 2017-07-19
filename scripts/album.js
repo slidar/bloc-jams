@@ -184,6 +184,8 @@ var setupSeekBars = function() {
 
                updateSeekPercentage($seekBar, seekBarFillRatio);
            });
+         });
+       }
 
  var trackIndex = function(album, song) {
       return album.songs.indexOf(song);
@@ -265,4 +267,18 @@ $(document).ready(function() {
     setupSeekBars();
     $previousButton.click(previousSong);
     $nextButton.click(nextSong);
+    // attach the event to the play/pause button in the playerbar here
 });
+
+function togglePlayFromPlayerBar() {
+    /*
+    If a song is paused and the play button is clicked in the player bar, it will
+    Change the song number cell from a play button to a pause button
+    Change the HTML of the player bar's play button to a pause button
+    Play the song
+    If the song is playing (so a current sound file exist), and the pause button is clicked
+    Change the song number cell from a pause button to a play button
+    Change the HTML of the player bar's pause button to a play button
+    Pause the song
+    */
+}
