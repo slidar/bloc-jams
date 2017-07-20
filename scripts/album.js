@@ -271,6 +271,23 @@ $(document).ready(function() {
 });
 
 function togglePlayFromPlayerBar() {
+
+  if (currentlyPlayingSongNumber !== songNumber) {
+      setSong(songNumber);
+      currentSoundFile.play();
+      $(this).html(pauseButtonTemplate);
+      currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
+      updatePlayerBarSong();
+
+  }  if (currentSoundFile.isPaused()) {
+          $(this).html(pauseButtonTemplate);
+          $('.main-controls .play-pause').html(playerBarPauseButton);
+          currentSoundFile.play();
+   } else {
+          $(this).html(playButtonTemplate);
+         $('.main-controls .play-pause').html(playerBarPlayButton);
+          currentSoundFile.pause();
+}
     /*
     If a song is paused and the play button is clicked in the player bar, it will
     Change the song number cell from a play button to a pause button
