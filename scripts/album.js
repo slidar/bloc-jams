@@ -25,7 +25,7 @@ var setVolume = function(volume) {
  };
 
 var getSongNumberCell = function(number){
-  return $('.song-item-number[data-song-number="' + number + '")]');
+  return $('.song-item-number[data-song-number="' + number + '"]');
 };
 
 var createSongRow = function(songNumber, songName, songLength) {
@@ -73,6 +73,7 @@ var createSongRow = function(songNumber, songName, songLength) {
                      $(this).html(playButtonTemplate);
                      $('.main-controls .play-pause').html(playerBarPlayButton);
                      currentSoundFile.pause();
+                     currentlyPlayingSongNumber = null;
             }
           }
 };
@@ -244,6 +245,8 @@ var previousSong = function() {
      $('.currently-playing .artist-name').text(currentAlbum.artist);
      $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.artist);
      $('.main-controls .play-pause').html(playerBarPauseButton);
+     $('.current-time').text(currentTime);
+     $('.total-time').text(totalTime);
 
  };
 
@@ -303,23 +306,30 @@ function togglePlayFromPlayerBar() {
   }
 }
 
+function filterTimeCode (timeInSeconds) {
+  // get the seconds in number form (using parseFloat)
+  // whole seconds and whole minutes calculated
+  // return a string in the X:XX format that the time in seconds is equal to
+  // example: timeInSeconds = 121.3, return "2:01"
+  // is the minutes is less than 10, we need to find a way to make the number padded, for example: 121 would turn into "2:1"
 
-function setCurrentTimeInPlayerBar () {
-  if (currentlyPlayingSongNumber !== songNumber) {
+  var minutes = Math.floor(parseFloat(timeInSeconds) / 60);
+  var seconds = timeInSeconds - (minutes * 60);
 
-      setSong(songNumber);
-      currentSoundFile.play();
-      $(this).html(pauseButtonTemplate);
-      currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
-      updatePlayerBarSong();
+  if (seconds < 10) {
+    seconds = "0" + seconds;
+  }
 
-}  if (currentSoundFile.isPaused()) {
-       $(this).html(pauseButtonTemplate);
-       $('.main-controls .play-pause').html(playerBarPauseButton);
-       currentSoundFile.play();
-   } else {
-          $(this).html(playButtonTemplate);
-          $('.main-controls .play-pause').html(playerBarPlayButton);
-          currentSoundFile.pause();
-      }
+  return minutes + ":" + seconds;
+}
+
+function setCurrentTimeInPlayerBar(currentTime) {
+  // set the text of the element with the .curent-time class to the current time in the song
+  $('.current-time').text(currentTime);
+}
+
+
+function setTotalTimeInPlayerBar(totalTime) {
+  // set the text of the element with the .total-time class to the length of the song
+  $('.total-time').text(totalTime);
 }
