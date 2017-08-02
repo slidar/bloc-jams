@@ -33,7 +33,7 @@ var createSongRow = function(songNumber, songName, songLength) {
         '<tr class="album-view-song-item">'
       + '  <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
       + '  <td class="song-item-title">' + songName + '</td>'
-      + '  <td class="song-item-duration">' + songLength + '</td>'
+      + '  <td class="song-item-duration">' + filterTimeCode(songLength) + '</td>'
       + '</tr>'
       ;
 
@@ -136,6 +136,8 @@ var updateSeekBarWhileSongPlays = function() {
               var $seekBar = $('.seek-control .seek-bar');
 
               updateSeekPercentage($seekBar, seekBarFillRatio);
+
+              setCurrentTimeInPlayerBar(filterTimeCode(this.getTime()));
           });
       }
   };
@@ -206,7 +208,7 @@ var nextSong = function() {
     currentSoundFile.play();
     currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
 
-    updatePlayerBarSong;
+    updatePlayerBarSong();
 
     var $nextSongNumberCell = $('.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]');
     var $lastSongNumberCell = $('.song-item-number[data-song-number="' + lastSongNumber + '"]');
@@ -228,7 +230,7 @@ var previousSong = function() {
     currentSoundFile.play();
     currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
 
-    updatePlayerBarSong;
+    updatePlayerBarSong();
 
     $('.main-controls .play-pause').html(playerBarPauseButton);
 
@@ -245,9 +247,8 @@ var previousSong = function() {
      $('.currently-playing .artist-name').text(currentAlbum.artist);
      $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.artist);
      $('.main-controls .play-pause').html(playerBarPauseButton);
-     $('.current-time').text(currentTime);
-     $('.total-time').text(totalTime);
 
+     setTotalTimeInPlayerBar(filterTimeCode(currentSongFromAlbum.duration));
  };
 
 var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
@@ -314,7 +315,7 @@ function filterTimeCode (timeInSeconds) {
   // is the minutes is less than 10, we need to find a way to make the number padded, for example: 121 would turn into "2:1"
 
   var minutes = Math.floor(parseFloat(timeInSeconds) / 60);
-  var seconds = timeInSeconds - (minutes * 60);
+  var seconds = Math.floor(timeInSeconds - (minutes * 60));
 
   if (seconds < 10) {
     seconds = "0" + seconds;
